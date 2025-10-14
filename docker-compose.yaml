@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - backend-data:/app/app/data  # for persistent JSON data
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: frontend-app
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend-data:
